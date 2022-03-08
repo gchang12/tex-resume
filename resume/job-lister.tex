@@ -1,0 +1,54 @@
+\newread\historyRead
+\newread\jobRead
+
+\def\makeSectionTitle#1{\uppercase{#1}\smallskip\hrule height 1 pt}
+
+\def\getJobInfo{
+    \openin\jobRead=experience/\jobEntry/about.txt
+    \read\jobRead to \positionTitle
+    \read\jobRead to \companyName
+    \read\jobRead to \jobAddressOne
+    \read\jobRead to \jobAddressTwo
+    \read\jobRead to \jobContact
+    \read\jobRead to \jobTenure
+    \read\jobRead to \jobPay
+    \closein\jobRead
+}
+
+\def\printJobInfo{
+    \smallskip\hrule\medskip
+    {\bf\positionTitle}\hfill\companyName\par
+    \jobTenure\hfill\jobAddressOne\par
+    \jobPay\hfill\jobAddressTwo\par
+    \hfill\jobContact\par
+}
+
+\def\printJobTasks{
+    \openin\jobRead=experience/\jobEntry/duties.txt
+    \medskip
+    \begingroup
+    \everypar={$\bullet$\quad}
+    \loop
+    \read\jobRead to \jobTask
+        \unless\ifeof\jobRead
+        \jobTask\endgraf
+        \repeat
+    \endgroup
+    \closein\jobRead
+    \bigskip
+}
+
+\def\printAllJobs{
+    \openin\historyRead=resume/experience.txt
+    \loop
+    \begingroup
+    \catcode`\^^M=9
+    \global\read\historyRead to \jobEntry
+    \endgroup
+    \unless\ifeof\historyRead
+        \getJobInfo
+        \printJobInfo
+        \printJobTasks
+        \repeat
+    \closein\historyRead
+}

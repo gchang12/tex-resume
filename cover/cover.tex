@@ -1,0 +1,53 @@
+\newread\coverRead
+
+\def\importFiles{
+    \openin\coverRead=cover/source-locs.txt
+    \read\coverRead to \addressSrc
+    \read\coverRead to \bodySrc
+    \read\coverRead to \salutationSrc
+    \read\coverRead to \signatureSrc
+    \closein\coverRead
+}
+
+\def\loadAddress{
+    \openin\coverRead=\addressSrc
+    \loop
+    \read\coverRead to \coverLine
+    \unless\ifeof\coverRead
+    \coverLine\endgraf
+    \repeat
+    \closein\coverRead
+}
+
+\def\loadBody{
+    \begingroup
+    \advance\parindent by 1cm
+    \input\bodySrc
+    \endgroup
+}
+
+\def\getLine#1#2{
+    \openin\coverRead=#1
+    \begingroup
+        \catcode`\^^M=9
+        \global\read\coverRead to #2
+    \endgroup
+    \closein\coverRead
+}
+
+\def\insertSalutation{
+    \getLine\salutationSrc\salutation
+    \salutation,
+}
+
+\def\insertSignature{
+    \getLine\signatureSrc\signature
+    \vfill
+    \hfill\vbox{\signature,\bigskip\myName}
+}
+
+\importFiles
+\loadAddress
+\insertSalutation
+\loadBody
+\insertSignature

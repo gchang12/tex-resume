@@ -1,0 +1,4 @@
+cover/addressee.txt
+cover/body.txt
+cover/salutation.txt
+cover/signature.txt

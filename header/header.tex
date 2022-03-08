@@ -1,0 +1,34 @@
+\newread\personalRead
+\openin\personalRead=header/content.txt
+\read\personalRead to \myName
+\read\personalRead to \addressOne
+\read\personalRead to \addressTwo
+\read\personalRead to \myEmail
+\read\personalRead to \myPhone
+\closein\personalRead
+
+\def\thickerRule{\hrule height 2pt}
+
+\def\printHeader{
+    \thickerRule
+    \medskip
+
+    \begingroup
+    \font\nameFont=cmb10 at 16 pt
+    \nameFont\myName
+    \endgroup
+
+    \medskip
+    \hrule
+
+    \smallskip
+    \addressOne\hfill\myPhone
+    \smallskip
+    \addressTwo\hfill\myEmail
+    \smallskip
+
+    \thickerRule
+    \bigskip\bigskip
+}
+
+\printHeader

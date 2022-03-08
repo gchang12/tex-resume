@@ -1,0 +1,34 @@
+\newread\schoolListRead
+\newread\schoolRead
+
+\def\getSchoolInfo{
+    \openin\schoolRead=education/\myEdu.txt
+    \read\schoolRead to \schoolName
+    \read\schoolRead to \sAddressOne
+    \read\schoolRead to \sAddressTwo
+    \read\schoolRead to \degreeEarned
+    \read\schoolRead to \academicTenure
+    \closein\schoolRead
+}
+
+\def\printSchoolInfo{
+    \smallskip\hrule\medskip
+    {\bf\degreeEarned}\hfill\schoolName\par
+    \academicTenure\hfill\sAddressOne\par
+    \hfill\sAddressTwo
+    \bigskip
+}
+
+\def\printAllSchools{
+    \openin\schoolListRead=resume/education.txt
+    \loop
+    \begingroup
+    \catcode`\^^M=9
+    \global\read\schoolListRead to \myEdu
+    \endgroup
+    \unless\ifeof\schoolListRead
+    \getSchoolInfo
+    \printSchoolInfo
+    \repeat
+    \closein\schoolListRead
+}
