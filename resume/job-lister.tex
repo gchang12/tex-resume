@@ -23,23 +23,17 @@
     \hfill\jobContact\par
 }
 
-\newbox\eparBox
+\newtoks\itemBullet
+\itemBullet={$\bullet$}
 
 \def\printJobTasks{
     \openin\jobRead=experience/\jobEntry/duties.txt
     \medskip
     \begingroup
-    \everypar={$\bullet$\quad}
-    \setbox\eparBox=\hbox{\the\everypar}
     \loop
     \read\jobRead to \jobTask
         \unless\ifeof\jobRead
-        \begingroup
-        \jobTask
-        \advance\parindent by \wd\eparBox
-        \hang
-        \endgraf
-        \endgroup
+        \item{\the\itemBullet\quad}\jobTask\endgraf
         \repeat
     \endgroup
     \closein\jobRead
