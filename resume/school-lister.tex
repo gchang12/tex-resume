@@ -20,7 +20,7 @@
 }
 
 \def\printAllSchools{
-    \openin\schoolListRead=resume/education.txt
+    \openin\schoolListRead=education/education.txt
     \loop
     \begingroup
     \catcode`\^^M=9
@@ -31,4 +31,5 @@
     \printSchoolInfo
     \repeat
     \closein\schoolListRead
+    \bigskip
 }

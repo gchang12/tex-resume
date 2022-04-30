@@ -23,15 +23,23 @@
     \hfill\jobContact\par
 }
 
+\newbox\eparBox
+
 \def\printJobTasks{
     \openin\jobRead=experience/\jobEntry/duties.txt
     \medskip
     \begingroup
     \everypar={$\bullet$\quad}
+    \setbox\eparBox=\hbox{\the\everypar}
     \loop
     \read\jobRead to \jobTask
         \unless\ifeof\jobRead
-        \jobTask\endgraf
+        \begingroup
+        \jobTask
+        \advance\parindent by \wd\eparBox
+        \hang
+        \endgraf
+        \endgroup
         \repeat
     \endgroup
     \closein\jobRead
@@ -39,7 +47,7 @@
 }
 
 \def\printAllJobs{
-    \openin\historyRead=resume/experience.txt
+    \openin\historyRead=experience/experience.txt
     \loop
     \begingroup
     \catcode`\^^M=9
@@ -51,4 +59,5 @@
         \printJobTasks
         \repeat
     \closein\historyRead
+    \bigskip
 }
